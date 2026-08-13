@@ -20,18 +20,23 @@ jobs:
         env:
           GH_USER: KaranAgrawal25
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SELF_REPO: KaranAgrawal25/KaranAgrawal25
         run: |
-          # Pull the 5 most recent public events (pushes) for the account
+          # Pull recent public push events for the account
           EVENTS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-            "https://api.github.com/users/$GH_USER/events/public?per_page=10")
+            "https://api.github.com/users/$GH_USER/events/public?per_page=30")
 
           {
             echo "block<<EOF"
-            echo "| Repo | Latest activity | When |"
+            echo "| Repo | Latest commit | When |"
             echo "|---|---|---|"
-            echo "$EVENTS" | jq -r '
-              [.[] | select(.type=="PushEvent")][0:5][] |
-              "| " + .repo.name + " | " + (.payload.commits[-1].message // "push") + " | " + (.created_at | sub("T.*";"")) + " |"
+            echo "$EVENTS" | jq -r --arg self "$SELF_REPO" '
+              [.[] | select(.type=="PushEvent") | select(.repo.name != $self)][0:5][] |
+              . as $e |
+              ($e.payload.commits // [] | map(select(.message != null and .message != "")) | last) as $c |
+              "| " + $e.repo.name + " | " +
+                (($c.message // "updated") | split("\n")[0] | .[0:60]) + " | " +
+                ($e.created_at | sub("T.*";"")) + " |"
             '
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
