@@ -1,0 +1,69 @@
+name: Update live README section
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"   # every 6 hours
+  workflow_dispatch: {}       # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  update-live-section:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout profile repo
+        uses: actions/checkout@v4
+
+      - name: Fetch latest activity across repos
+        id: fetch
+        env:
+          GH_USER: KaranAgrawal25
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Pull the 5 most recent public events (pushes) for the account
+          EVENTS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/users/$GH_USER/events/public?per_page=10")
+
+          {
+            echo "block<<EOF"
+            echo "| Repo | Latest activity | When |"
+            echo "|---|---|---|"
+            echo "$EVENTS" | jq -r '
+              [.[] | select(.type=="PushEvent")][0:5][] |
+              "| " + .repo.name + " | " + (.payload.commits[-1].message // "push") + " | " + (.created_at | sub("T.*";"")) + " |"
+            '
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Inject into README
+        run: |
+          python3 - <<'PYEOF'
+          import re, os
+
+          with open("README.md", "r") as f:
+              content = f.read()
+
+          block = os.environ["BLOCK"]
+          new_section = f"<!--LIVE-COMMIT-START-->\n{block}\n<!--LIVE-COMMIT-END-->"
+
+          content = re.sub(
+              r"<!--LIVE-COMMIT-START-->.*?<!--LIVE-COMMIT-END-->",
+              new_section,
+              content,
+              flags=re.DOTALL,
+          )
+
+          with open("README.md", "w") as f:
+              f.write(content)
+          PYEOF
+        env:
+          BLOCK: ${{ steps.fetch.outputs.block }}
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --quiet && git diff --staged --quiet || git commit -m "chore: update live activity section"
+          git push
