@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=28&duration=3000&pause=1000&color=00F7FF&center=true&vCenter=true&width=800&lines=Karan+Agrawal;AI+%7C+IoT+%7C+Quant+Developer;Building+Real-World+Projects;VIT+Chennai" alt="Typing SVG" />
+</p>
+
 # Hi there 👋, I’m Karan Agrawal
 
 🎓 Second Year @ VIT Chennai  
