@@ -24,13 +24,13 @@ I'm not "exploring AI" — I'm building four production systems in parallel, and
 ## 🟢 Live from my repos
 
 <!--LIVE-COMMIT-START-->
-| Repo | Latest activity | When |
+| Repo | Latest commit | When |
 |---|---|---|
-| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
-| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
-| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
-| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
-| KaranAgrawal25/VisionForge-AI | push | 2026-08-13 |
+| KaranAgrawal25/VisionForge-AI | updated | 2026-08-13 |
+| KaranAgrawal25/VisionForge-AI | updated | 2026-07-30 |
+| KaranAgrawal25/VisionForge-AI | updated | 2026-07-30 |
+| KaranAgrawal25/VisionForge-AI | updated | 2026-07-30 |
+| KaranAgrawal25/VisionForge-AI | updated | 2026-07-30 |
 <!--LIVE-COMMIT-END-->
 
 <br/>
