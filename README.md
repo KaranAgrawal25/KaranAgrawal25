@@ -24,7 +24,13 @@ I'm not "exploring AI" — I'm building four production systems in parallel, and
 ## 🟢 Live from my repos
 
 <!--LIVE-COMMIT-START-->
-*This section auto-updates every 6 hours via GitHub Actions — pulled directly from my own commit history, not a third-party stats widget.*
+| Repo | Latest activity | When |
+|---|---|---|
+| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
+| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
+| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
+| KaranAgrawal25/KaranAgrawal25 | push | 2026-08-13 |
+| KaranAgrawal25/VisionForge-AI | push | 2026-08-13 |
 <!--LIVE-COMMIT-END-->
 
 <br/>
